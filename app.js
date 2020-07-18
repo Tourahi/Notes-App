@@ -40,8 +40,7 @@ yargs
     },
   },
   handler: function (agrv) {
-      console.log("Removing a note" + " Title : " +agrv.title);
-      console.log("The body : " + agrv.body);
+    notesUtil.removeNote(agrv.title);
   }
 });
 
