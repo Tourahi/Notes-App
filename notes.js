@@ -1,43 +1,39 @@
 const fs = require('fs');
+const chalk = require('chalk');
 const getNotes = () => "Your Notes";
 
-
+const RED   = chalk.red.inverse;
+const GREEN = chalk.green.inverse;
 
 
 const addNote = function (title , body) {
    Data = loadNotes();
-   const duplica = Data.filter(function (note) {
-     return note.title === title;
-   });
-
+   const duplica = Data.filter((note) => note.title === title);
    if(duplica.length === 0){
      Data.push({
        title: title,
        body: body
      });
      saveNotes(Data);
-     console.log("Note Added.");
+     console.log(GREEN("Note Added."));
    }
    else {
-     console.log("Title already exists.");
+     console.log(RED("Title already exists."));
    }
 }
 
 const removeNote = function (title) {
   Data = loadNotes();
-  let Orglength = Data.length;
-  const FiltredData = Data.filter(function (note) {
-    return note.title != title;
-  });
+  let Orglength = Data.length; //Save the original length
+  const FiltredData = Data.filter((note) => note.title != title);
   if(Orglength != FiltredData.length)
   {
-    console.log("Note removed.");
+    console.log(GREEN("Note removed."));
     saveNotes(FiltredData);
   }
   else{
-    console.log("Note does not exist.");
+    console.log(RED("Note does not exist."));
   }
-
 }
 
 const saveNotes = function (data){
