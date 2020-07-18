@@ -4,10 +4,11 @@ const getNotes = () => "Your Notes";
 
 const RED   = chalk.red.inverse;
 const GREEN = chalk.green.inverse;
+const CYAN = chalk.cyan;
 
 
-const addNote = function (title , body) {
-   Data = loadNotes();
+const addNote = (title , body) => {
+   const Data = loadNotes();
    const duplica = Data.filter((note) => note.title === title);
    if(duplica.length === 0){
      Data.push({
@@ -22,8 +23,8 @@ const addNote = function (title , body) {
    }
 }
 
-const removeNote = function (title) {
-  Data = loadNotes();
+const removeNote = (title) => {
+  const Data = loadNotes();
   let Orglength = Data.length; //Save the original length
   const FiltredData = Data.filter((note) => note.title != title);
   if(Orglength != FiltredData.length)
@@ -36,12 +37,21 @@ const removeNote = function (title) {
   }
 }
 
-const saveNotes = function (data){
+const listNotes = () => {
+  const Data = loadNotes();
+  Data.forEach((note) => {
+    console.log(CYAN(note.title));
+  });
+  console.log(GREEN('Total notes : ' + Data.length));
+}
+
+
+const saveNotes = (data) => {
   const dataJSON = JSON.stringify(data);
   fs.writeFileSync("notes.json" , dataJSON);
 }
 
-const loadNotes = function (){
+const loadNotes = () => {
   try {
     const dataBuffer = fs.readFileSync("notes.json");
     return JSON.parse(dataBuffer.toString());
@@ -53,6 +63,7 @@ const loadNotes = function (){
 
 
 module.exports = {
-  addNote: addNote,
-  removeNote : removeNote
+  addNote    : addNote,
+  removeNote : removeNote,
+  listNotes  : listNotes
 };
