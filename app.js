@@ -23,7 +23,6 @@ yargs
         type: 'string'
       }
     },
-  },
   handler: function (argv) {
       notesUtil.addNote(argv.title, argv.body);
   }
@@ -63,11 +62,6 @@ yargs
       console.log("Reading a note");
   }
 });
+
+
 yargs.parse();
-
-
-
-
-
-
-// console.log(yargs.argv);
