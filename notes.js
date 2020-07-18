@@ -1,6 +1,5 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const getNotes = () => "Your Notes";
 
 const RED   = chalk.red.inverse;
 const GREEN = chalk.green.inverse;
@@ -9,8 +8,8 @@ const CYAN = chalk.cyan;
 
 const addNote = (title , body) => {
    const Data = loadNotes();
-   const duplica = Data.filter((note) => note.title === title);
-   if(duplica.length === 0){
+   const duplica = Data.find((note) => note.title === title);
+   if(!duplica){
      Data.push({
        title: title,
        body: body
@@ -45,6 +44,17 @@ const listNotes = () => {
   console.log(GREEN('Total notes : ' + Data.length));
 }
 
+const readNote = (title) => {
+  const Data = loadNotes();
+  const note = Data.find((note) => note.title === title);
+  if(note){
+    console.log(GREEN(note.title));
+    console.log(note.body);
+  }
+  else {
+    console.log('Note does not exist.');
+  }
+}
 
 const saveNotes = (data) => {
   const dataJSON = JSON.stringify(data);
@@ -65,5 +75,6 @@ const loadNotes = () => {
 module.exports = {
   addNote    : addNote,
   removeNote : removeNote,
-  listNotes  : listNotes
+  listNotes  : listNotes,
+  readNote   : readNote
 };
